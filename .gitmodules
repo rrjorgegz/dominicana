@@ -2,7 +2,3 @@
 	path = indexa-git/l10n-dominicana
 	url = https://github.com/indexa-git/l10n-dominicana.git
 	branch = 17.0
-[submodule "OCA/edi"]
-	path = OCA/edi
-	url = https://github.com/OCA/edi.git
-	branch = 17.0
