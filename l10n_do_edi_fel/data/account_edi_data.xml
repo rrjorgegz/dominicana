@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="edi_do_fel" model="account.edi.format">
+        <field name="name">República FEL (DO)</field>
+        <field name="code">do_fel</field>
+    </record>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="edi_env_form" model="ir.ui.view">
+        <field name="name">edi.env.form</field>
+        <field name="model">edi.env</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="server" />
+                        </group>
+                        <group>
+                            <field name="active" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="edi_env_tree" model="ir.ui.view">
+        <field name="name">edi.env.tree</field>
+        <field name="model">edi.env</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="server" />
+                <field name="active" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="edi_env_action" model="ir.actions.act_window">
+        <field name="name">EDI Enviroment</field>
+        <field name="res_model">edi.env</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+    id="edi_env_menu"
+    name="EDI Enviroment"
+    action="edi_env_action"
+    parent="account.account_account_menu"
+    sequence="80"
+  />
+
+</odoo>

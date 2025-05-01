@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+    <data>
+        <template id="template_invoice_post">
+            <country t-out="company_id.country_code" />
+            <entity t-out="company_id.vat" />
+            <username t-out="company_id.l10n_do_edi_username" />
+            <password t-out="company_id.l10n_do_edi_password" />
+            <transaction>SYSTEM_REQUEST</transaction>
+            <data1>POST_DOCUMENT_DO_PDF</data1>
+            <data2 />
+            <data3 />
+        </template>
+    </data>
+</odoo>

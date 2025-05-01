@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+    <template id="template_invoice_post">
+        <Request>
+            <country t-out="inv.company_id.country_code" />
+            <entity t-out="inv.company_id.vat" />
+            <username t-out="inv.company_id.l10n_do_edi_username" />
+            <password t-out="inv.company_id.l10n_do_edi_password" />
+            <transaction>SYSTEM_REQUEST</transaction>
+            <data1>POST_DOCUMENT_DO_PDF</data1>
+            <data2>
+                <t t-call="l10n_do_edi_fel.template_data2" />
+            </data2>
+            <data3 />
+        </Request>
+    </template>
+
+    <template id="template_data2">
+        <Encabezado>
+            <IdDoc>
+                <TipoeCF t-out="inv.l10n_latam_document_type_id.doc_code_prefix[1:3]" />
+                <TipoIngresos t-value="" />
+                <TipoPago t-out="tipo_pago" />
+            </IdDoc>
+            <Emisor>
+                <RNCEmisor t-out="inv.company_id.vat" />
+                <Sucursal t-out="inv.company_id.company_registry or '01'" />
+                <CodigoVendedor t-value="Cod_Vendedor" />
+                <NumeroFacturaInterna t-out="inv.name" />
+                <NumeroPedidoInterno t-out="inv.id" />
+                <ZonaVenta t-value="" />
+                <RutaVenta t-value="" />
+                <FechaEmision t-out="inv.invoice_date.strftime('%d-%m-%Y')" />
+            </Emisor>
+            <Comprador>
+                <RNCComprador t-out="inv.partner_id.vat" />
+                <IdentificadorExtranjero t-value="" />
+                <RazonSocialComprador t-out="inv.partner_id.name" />
+                <CorreoComprador t-value="" />
+                <DireccionComprador t-value="" />
+                <NumeroOrdenCompra t-value="" />
+                <MunicipioComprador t-value="" />
+                <ProvinciaComprador t-value="" />
+                <Informacionadicionalcomprador t-out="inv.partner_id.website" />
+            </Comprador>
+            <Totales>
+                <hasITBIS1 />
+                <totITBIS1 />
+                <hasITBIS2 />
+                <totITBIS2 />
+                <hasITBIS3 />
+                <totITBIS3 />
+                <MontoGravadoI1 />
+                <MontoGravadoI2 />
+                <MontoGravadoI3 />
+                <MontoGravadoTotal />
+                <Subtotal />
+                <TotalDescuento />
+                <TotalITBIS />
+                <MontoTotal />
+                <TipoMoneda />
+                <TipoCambio />
+            </Totales>
+        </Encabezado>
+        <DetallesItems>
+            <Item>
+                <t t-foreach="inv.invoice_line_ids" t-as="line" t-key="line_index">
+                    <NumeroLinea t-value="line_index" />
+                    <TablaCodigosItem>
+                        <CodigosItem>
+                            <TipoCodigo t-value="Interno" />
+                            <CodigoItem
+                t-out="line.product_id.default_code or f'{line.product_id.id}'"
+              />
+                        </CodigosItem>
+                    </TablaCodigosItem>
+                    <IndicadorFacturacion t-value="line_index" />
+                    <NombreItem t-out="line.product_id.name" />
+                    <IndicadorBienoServicio />
+                    <CantidadItem
+            t-out="line.product_id.uom_id._compute_quantity(line.quantity ,line.product_uom_id , round=False)"
+          />
+                    <PrecioUnitarioItem t-out="line.price_unit" />
+                    <DescuentoMonto t-out="line.discount" />
+                    <RecargoMonto t-value="0" />
+                    <MontoItem t-out="line.price_subtotal" />
+                </t>
+            </Item>
+        </DetallesItems>
+    </template>
+</odoo>
